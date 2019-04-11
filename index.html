@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程购物车案例</title>
+    <!-- 引入样式表 -->
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+</head>
+<body>
+    <div id="app" v-cloak>
+        <!-- 在页面中进行判断,如果购物车中有课程就展示(课程列表的长度 > 0 ),没有课程内容就展示购物车为空(课程列表的长度 <= 0) -->
+        <!-- 如果购物车中有课程就展示 -->
+        <template v-if="list.length">
+            <table>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>课程名称</th>
+                        <th>课程单价</th>
+                        <th>购买数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 循环遍历课程列表，把列表中对应属性内容添加到与之对应的结构中 -->
+                    <tr v-for="(item,index) in list">
+                        <td>{{index + 1}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.price}}</td>
+                        <td>
+                            <!-- 购买数量 减少 操作（如果购买的数量为 1 时，禁止点击减少操作按钮）-->
+                            <button @click="reduce(index)" :disabled="item.count === 0">-</button>
+                            {{item.count}}
+                            <!-- 购买数量 增加 操作 -->
+                            <button @click="add(index)">+</button>
+                        </td>
+                        <td>
+                            <!-- 移除当前行 -->
+                            <button @click="remove(index)">移除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="total-prices">￥购买总价：{{totalPrices}}</div>
+        </template>
+        <!-- 没有课程内容就展示购物车为空 -->
+        <div v-else>购物车为空</div>
+    </div>
+    <!--  引入vue.js -->
+    <script src="./js/vue2.js"></script>
+    <!-- 引入自定义的js -->
+    <script src="./js/main.js"></script>
+</body>
+</html>
+
